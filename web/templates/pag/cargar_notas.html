@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cargar Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #7289da;
+            border-bottom: 1px solid #7289da;
+            padding-bottom: 5px;
+        }
+
+        form {
+            background-color: #fff;
+            border: 1px solid #e1e3e6;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #7289da;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #677bc4;
+        }
+
+        h2 {
+            color: #7289da;
+            margin-top: 30px;
+            border-bottom: 1px solid #7289da;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cargar Notas de Estudiantes</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nombre_estudiante">Nombre y Apellido del Estudiante:</label>
+        <select name="nombre_estudiante" id="nombre_estudiante">
+            {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.nombre }}">{{ estudiante.nombre }}</option>
+            {% endfor %}
+        </select>
+        <label for="materia">Materia:</label>
+        <select name="materia" id="materia">
+            {% for materia_choice in form.fields.materia.choices %}
+                <option value="{{ materia_choice.0 }}">{{ materia_choice.1 }}</option>
+            {% endfor %}
+        </select>
+        <label for="nota">Nota:</label>
+        <input type="number" step="0.01" name="nota" id="nota" required>
+        <br>
+        <input type="submit" value="Guardar Nota">
+    </form>
+    <h2>Notas Registradas:</h2>
+    <ul>
+        {% for nota in notas %}
+            <li>{{ nota.estudiante }} - {{ nota.materia }}: {{ nota.nota }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar PDF - Estilo Futurista</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #121212;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #FFFFFF;
+            background-color: #3EA6FF; /* Celeste */
+            padding: 10px;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #1E1E1E;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="file"],
+        form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #3EA6FF; /* Celeste */
+            border-radius: 8px;
+            background-color: #121212;
+            color: #FFFFFF;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="file"]:focus,
+        form select:focus {
+            border-color: #3EA6FF; /* Celeste */
+            background-color: #1E1E1E;
+            box-shadow: 0 0 10px #3EA6FF; /* Celeste */
+        }
+
+        form button[type="submit"] {
+            background-color: #3EA6FF; /* Celeste */
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            width: 100%;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #55b8ff; /* Tonos más oscuros de celeste */
+        }
+
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            background-color: #3EA6FF; /* Celeste */
+            color: #FFFFFF;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .file-upload p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload span {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #FFFFFF;
+        }
+
+        .file-upload:hover {
+            background-color: #55b8ff; /* Tonos más oscuros de celeste */
+        }
+
+        h2 + ul {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #1E1E1E;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        ul li a {
+            color: #3EA6FF; /* Celeste */
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Editar Version</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="id_nombre">Nombre del PDF:</label>
+        {{ form.nombre }}
+
+        <div class="file-upload">
+            <p>Arrastra y suelta el archivo aquí o</p>
+            <label for="file-upload" class="file-upload-label">Haz clic para seleccionar un archivo</label>
+            <input type="file" id="file-upload" name="archivo_pdf" onchange="displayFileName()"/>
+            <span id="file-name">Ningún archivo seleccionado</span>
+        </div>
+
+        <label for="id_materia">Materia:</label>
+        {{ form.materia }}
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+    <script>
+        function displayFileName() {
+            const fileInput = document.getElementById('file-upload');
+            const fileNameSpan = document.getElementById('file-name');
+            fileNameSpan.textContent = fileInput.files[0] ? fileInput.files[0].name : 'Ningún archivo seleccionado';
+        }
+    </script>
+</body>
+</html>

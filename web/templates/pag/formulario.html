@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Datos Personales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            max-width: 800px; /* Ajusta el ancho según tus necesidades */
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 60px;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-group {
+            width: calc(50% - 10px); /* Ajusta el ancho según tus necesidades */
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group select, .form-group input[type="date"], .form-group input[type="file"], .form-group textarea {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        .image-container {
+            width: 200px;
+            height: 200px;
+            left: auto;
+            
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        .upload-btn {
+            margin-top: 5px;
+            display: block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+.custom-button {
+  display: inline-block;
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 5px 100px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <h1>Formulario de Datos Personales</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="foto">Foto de Perfil:</label>
+            <div class="image-container">
+                <img src="{% if datos_estudiante.foto %}{{ datos_estudiante.foto.url }}{% else %}{{ image_placeholder_url }}{% endif %}" alt="Foto de perfil" id="image-preview">
+            </div>
+            <label for="foto" class="upload-btn">Subir foto</label>
+            <input type="file" id="foto" name="foto" accept="image/*" style="display:none;" onchange="previewImage(event)">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ datos_estudiante.nombre }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" value="{{ datos_estudiante.apellido }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" value="{{ datos_estudiante.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" value="{{ datos_estudiante.telefono }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ datos_estudiante.fecha_nacimiento|default:'' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="" disabled{% if not datos_estudiante.genero %} selected{% endif %}>-- Selecciona --</option>
+                <option value="M"{% if datos_estudiante.genero == 'M' %} selected{% endif %}>Masculino</option>
+                <option value="F"{% if datos_estudiante.genero == 'F' %} selected{% endif %}>Femenino</option>
+                <option value="O"{% if datos_estudiante.genero == 'O' %} selected{% endif %}>Otro</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <textarea id="direccion" name="direccion"  required>{{ datos_estudiante.direccion }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" id="ciudad" name="ciudad" value="{{ datos_estudiante.ciudad }}">
+        </div>
+
+        <div class="form-group">
+            <label for="pais">País:</label>
+            <input type="text" id="pais" name="pais" value="{{ datos_estudiante.pais }}">
+        </div>
+
+
+        <button type="submit" class="custom-button">Guardar</button>
+    </form>
+ 
+ 
+
+    <script>
+        function previewImage(event) {
+            var imagePreview = document.getElementById('image-preview');
+            imagePreview.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        function resetImage() {
+            var imagePreview = document.getElementById('image-preview');
+            imagePreview.src = '';
+            var inputFile = document.getElementById('foto');
+            inputFile.value = '';
+        }
+    </script>
+</body>
+</html>

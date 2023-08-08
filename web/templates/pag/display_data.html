@@ -1,0 +1,104 @@
+<!-- display_data.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Datos del Estudiante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .custom-button {
+            display: inline-block;
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 5px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .image-container {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>Datos del Estudiante</h1>
+    <div class="image-container">
+        <img src="{{ datos_estudiante.foto.url }}" alt="Foto de perfil">
+    </div>
+    <table>
+        <tr>
+            <th>Nombre:</th>
+            <td>{{ datos_estudiante.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Apellido:</th>
+            <td>{{ datos_estudiante.apellido }}</td>
+        </tr>
+        <tr>
+            <th>Correo electrónico:</th>
+            <td>{{ datos_estudiante.email }}</td>
+        </tr>
+        <tr>
+            <th>Teléfono:</th>
+            <td>{{ datos_estudiante.telefono }}</td>
+        </tr>
+        <tr>
+            <th>Fecha de Nacimiento:</th>
+            <td>{{ datos_estudiante.fecha_nacimiento }}</td>
+        </tr>
+        <tr>
+            <th>Género:</th>
+            <td>{{ datos_estudiante.get_genero_display }}</td>
+        </tr>
+        <tr>
+            <th>Dirección:</th>
+            <td>{{ datos_estudiante.direccion }}</td>
+        </tr>
+        <tr>
+            <th>Ciudad:</th>
+            <td>{{ datos_estudiante.ciudad }}</td>
+        </tr>
+        <tr>
+            <th>País:</th>
+            <td>{{ datos_estudiante.pais }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'actualizar_datos_estudiante' %}" class="custom-button">Editar</a>
+    <a href="{% url 'download_data' %}" class="custom-button">Descargar PDF</a>
+</body>
+</html>
